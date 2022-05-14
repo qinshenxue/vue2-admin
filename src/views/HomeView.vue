@@ -2,6 +2,12 @@
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png" />
     <a-date-picker></a-date-picker>
+    <a-select default-value="lucy" style="width:320px">
+      <a-select-option value="jack"> Jack </a-select-option>
+      <a-select-option value="lucy"> Lucy </a-select-option>
+      <a-select-option value="disabled" disabled> Disabled </a-select-option>
+      <a-select-option value="Yiminghe"> yiminghe </a-select-option>
+    </a-select>
   </div>
 </template>
 
