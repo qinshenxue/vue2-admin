@@ -8,10 +8,14 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-
 import zhCN from '@qinsx/ant-design-vue/lib/locale-provider/zh_CN'
 
+@Component
 export default class extends Vue {
   locale = zhCN
+
+  created() {
+    console.log(this.locale.a)
+  }
 }
 </script>
