@@ -5,9 +5,13 @@ import store from './store'
 import AntVue from '@qinsx/ant-design-vue'
 import '@qinsx/ant-design-vue/dist/antd.css'
 import '@/assets/style.less'
+import Request from './utils/request'
+
+import '../mock/index'
 
 Vue.config.productionTip = false
 Vue.use(AntVue)
+Vue.use(Request)
 
 new Vue({
   router,

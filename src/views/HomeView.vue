@@ -2,7 +2,7 @@
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png" />
     <a-date-picker></a-date-picker>
-    <a-select default-value="lucy" style="width:320px">
+    <a-select default-value="lucy" style="width: 320px">
       <a-select-option value="jack"> Jack </a-select-option>
       <a-select-option value="lucy"> Lucy </a-select-option>
       <a-select-option value="disabled" disabled> Disabled </a-select-option>
@@ -20,7 +20,12 @@ import HelloWorld from '@/components/HelloWorld.vue'
     HelloWorld
   }
 })
-export default class HomeView extends Vue {}
+export default class HomeView extends Vue {
+  async created() {
+    const res = await this.$http.post('/user/info')
+    console.log('res: ', res.data)
+  }
+}
 </script>
 
 <style lang="less" scoped>
