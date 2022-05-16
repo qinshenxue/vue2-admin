@@ -14,6 +14,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import HelloWorld from '@/components/HelloWorld.vue'
+import UserService from '@/api/user'
 
 @Component({
   components: {
@@ -22,8 +23,8 @@ import HelloWorld from '@/components/HelloWorld.vue'
 })
 export default class HomeView extends Vue {
   async created() {
-    const res = await this.$http.post('/user/info')
-    console.log('res: ', res.data)
+    const res = await UserService.login({})
+    console.log(res.data)
   }
 }
 </script>

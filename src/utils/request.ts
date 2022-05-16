@@ -55,4 +55,6 @@ const plugin: PluginObject<Vue> = {
   }
 }
 
+export { client as request }
+
 export default plugin
