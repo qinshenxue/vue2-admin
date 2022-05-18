@@ -13,13 +13,10 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import HelloWorld from '@/components/HelloWorld.vue'
 import UserService from '@/api/user'
 
 @Component({
-  components: {
-    HelloWorld
-  }
+  components: {}
 })
 export default class HomeView extends Vue {
   async created() {

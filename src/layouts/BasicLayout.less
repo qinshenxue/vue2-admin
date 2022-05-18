@@ -1,0 +1,128 @@
+@import '@/assets/vars.less';
+@header-height: 52px;
+@hr: header-right;
+
+.ant-layout {
+  height: 100%;
+  display: flex;
+  flex: auto;
+  min-height: 0;
+}
+
+.ant-layout-header {
+  height: 52px;
+  box-shadow: inset 0 -1px 0 0 @border-color;
+  background-color: #fff;
+  line-height: 52px;
+  padding-left: 12px;
+  padding-right: 12px;
+  display: flex;
+
+  .header-left {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .header-user-avatar {
+    height: @header-height;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    .ant-avatar {
+      background-color: @primary-color;
+    }
+  }
+
+  .@{hr} {
+    display: flex;
+    align-items: center;
+    padding-right: 18px;
+  }
+
+  .@{hr}-item {
+    display: flex;
+    align-items: center;
+    margin-right: 24px;
+  }
+
+  .@{hr}-item-icon {
+    font-size: 18px;
+    color: @tip-font-color;
+  }
+
+  .@{hr}-x {
+    color: red;
+  }
+
+  .logo {
+    color: #36a0da;
+    display: flex;
+    align-items: center;
+
+    .svg-icon {
+      height: 28px;
+      width: (2789px / 1024px * $height);
+    }
+  }
+}
+
+.ant-layout-sider {
+  background-color: #f7f8fa;
+
+
+
+  /deep/ .ant-menu {
+    border-right: 0;
+    background-color: transparent;
+    height: calc(100% - 52px);
+    padding: 0 10px;
+
+
+    .ant-menu-item {
+      height: 36px;
+      line-height: $height;
+    }
+
+    .ant-menu-item:hover,
+    .ant-menu-item-selected {
+      border-radius: 3px;
+      background-color: #e7ecfb;
+
+      &::after {
+        display: none;
+      }
+    }
+
+    &.ant-menu-inline-collapsed {
+      width: 56px;
+      padding: 0;
+
+      >.ant-menu-submenu>.ant-menu-submenu-title {
+        padding: 0 20px !important;
+      }
+    }
+  }
+
+  .sider-bottom {
+    height: 52px;
+    box-shadow: inset 0 1px 0 0 @border-color;
+    text-align: right;
+    line-height: $height;
+    padding-right: 20px;
+
+    .fold-sider {
+      cursor: pointer;
+      color: @tip-font-color;
+      font-size: 16px;
+
+      &:hover {
+        color: @primary-color;
+      }
+    }
+
+  }
+
+}

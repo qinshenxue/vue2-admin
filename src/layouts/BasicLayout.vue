@@ -1,48 +1,79 @@
 <template>
   <a-layout>
     <a-layout-header class="header">
-      <div class="logo" />
-      <a-menu
-        theme="dark"
-        mode="horizontal"
-        :default-selected-keys="['2']"
-        :style="{ lineHeight: '64px' }"
-      >
-        <a-menu-item key="1"> nav 1 </a-menu-item>
-        <a-menu-item key="2"> nav 2 </a-menu-item>
-        <a-menu-item key="3"> nav 3 </a-menu-item>
-      </a-menu>
+      <div class="header-left">
+        <div class="logo">
+          <svg-icon icon="mingyuanyun"></svg-icon>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="header-right-item">
+          <a-badge dot>
+            <a-icon class="header-right-item-icon" type="bell" />
+          </a-badge>
+        </div>
+        <div class="header-right-item">
+          <a-icon class="header-right-item-icon" type="question-circle" />
+        </div>
+        <a-dropdown :trigger="['click']">
+          <div class="header-user-avatar">
+            <a-avatar>申学</a-avatar>
+          </div>
+          <a-menu slot="overlay">
+            <a-menu-item key="1"><a-icon type="lock" />修改密码</a-menu-item>
+            <a-menu-item key="3"><a-icon type="logout" />退出登录</a-menu-item>
+          </a-menu>
+        </a-dropdown>
+      </div>
     </a-layout-header>
     <a-layout>
-      <a-layout-sider width="200" style="background: #fff">
+      <a-layout-sider
+        width="200"
+        v-model="collapsed"
+        :trigger="null"
+        collapsible
+        collapsedWidth="56"
+      >
         <a-menu
           mode="inline"
           :default-selected-keys="['1']"
           :default-open-keys="['sub1']"
-          :style="{ height: '100%', borderRight: 0 }"
         >
           <a-sub-menu key="sub1">
-            <span slot="title"> <a-icon type="user" />subnav 1 </span>
-            <a-menu-item key="1"> option1 </a-menu-item>
-            <a-menu-item key="2"> option2 </a-menu-item>
-            <a-menu-item key="3"> option3 </a-menu-item>
-            <a-menu-item key="4"> option4 </a-menu-item>
+            <span slot="title">
+              <a-icon type="user" /><span>用户管理</span>
+            </span>
+            <a-menu-item key="1"> 用户列表 </a-menu-item>
+            <a-menu-item key="2"> 菜单管理 </a-menu-item>
+            <a-menu-item key="3"> 授权管理 </a-menu-item>
           </a-sub-menu>
           <a-sub-menu key="sub2">
-            <span slot="title"> <a-icon type="laptop" />subnav 2 </span>
-            <a-menu-item key="5"> option5 </a-menu-item>
-            <a-menu-item key="6"> option6 </a-menu-item>
-            <a-menu-item key="7"> option7 </a-menu-item>
-            <a-menu-item key="8"> option8 </a-menu-item>
+            <span slot="title">
+              <a-icon type="laptop" /><span>角色管理</span>
+            </span>
+            <a-menu-item key="5"> 角色列表 </a-menu-item>
+            <a-menu-item key="6"> 新增角色 </a-menu-item>
+            <a-menu-item key="7">删除角色</a-menu-item>
+            <a-menu-item key="8">查询角色</a-menu-item>
           </a-sub-menu>
           <a-sub-menu key="sub3">
-            <span slot="title"> <a-icon type="notification" />subnav 3 </span>
-            <a-menu-item key="9"> option9 </a-menu-item>
-            <a-menu-item key="10"> option10 </a-menu-item>
-            <a-menu-item key="11"> option11 </a-menu-item>
-            <a-menu-item key="12"> option12 </a-menu-item>
+            <span slot="title">
+              <a-icon type="notification" /><span>系统管理</span></span
+            >
+            <a-menu-item key="9"> 系统日志 </a-menu-item>
+            <a-menu-item key="10"> 操作日志 </a-menu-item>
+            <a-menu-item key="11">
+              名字很长名字很长名字很长名字很长
+            </a-menu-item>
           </a-sub-menu>
         </a-menu>
+        <div class="sider-bottom">
+          <a-icon
+            class="fold-sider"
+            :type="collapsed ? 'menu-unfold' : 'menu-fold'"
+            @click.native="toggleSiderFold"
+          />
+        </div>
       </a-layout-sider>
       <a-layout style="padding: 0 24px 24px">
         <a-breadcrumb style="margin: 16px 0">
@@ -62,14 +93,15 @@
 import { Component, Vue } from 'vue-property-decorator'
 
 @Component
-export default class BasicLayout extends Vue {}
+export default class BasicLayout extends Vue {
+  collapsed = false
+
+  toggleSiderFold() {
+    this.collapsed = !this.collapsed
+  }
+}
 </script>
 
 <style lang="less" scoped>
-.ant-layout {
-  height: 100%;
-  display: flex;
-  flex: auto;
-  min-height: 0;
-}
+@import './BasicLayout.less';
 </style>
