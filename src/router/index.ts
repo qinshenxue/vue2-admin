@@ -17,7 +17,55 @@ const routes: Array<RouteConfig> = [
     children: [
       {
         path: '',
-        component: () => import('../views/HomeView.vue')
+        component: () => import('../views/HomeView.vue'),
+        meta: {
+          title: '首页',
+          nav: true
+        }
+      }
+    ]
+  },
+  {
+    path: '/list',
+    component: BasicLayout,
+    meta: {
+      nav: true,
+      title: '列表'
+    },
+    children: [
+      {
+        path: 'ListWithFilter',
+        component: () => import('../views/list/ListWithFilter.vue'),
+        meta: {
+          nav: true,
+          title: '列表带筛选'
+        }
+      },
+      {
+        path: 'ListWithIcon',
+        component: () => import('../views/list/ListWithIcon.vue'),
+        meta: {
+          nav: true,
+          title: '列表带图标'
+        }
+      }
+    ]
+  },
+  {
+    path: '/form',
+    component: BasicLayout,
+    meta: {
+      nav: true,
+      title: '表单'
+    },
+    children: [
+      {
+        path: 'ListWithForm',
+        component: () => import('../views/list/ListWithFilter.vue'),
+        meta: {
+          nav: true,
+          title: '列表带筛选'
+        }
       }
     ]
   }

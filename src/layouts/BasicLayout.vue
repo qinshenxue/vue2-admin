@@ -35,10 +35,34 @@
         collapsedWidth="56"
       >
         <a-menu
+          class="nav-menu"
           mode="inline"
-          :default-selected-keys="['1']"
+          :inlineIndent="10"
+          :default-selected-keys="activeMenu"
           :default-open-keys="['sub1']"
+          @click="handleMenuClick"
         >
+          <template v-for="menu in menuList">
+            <a-sub-menu
+              v-if="menu.children && menu.children.length"
+              :key="menu.path"
+            >
+              <span slot="title">
+                <a-icon type="user" /><span>{{ menu.title }}</span>
+              </span>
+              <a-menu-item v-for="child in menu.children" :key="child.path">{{
+                child.title
+              }}</a-menu-item>
+            </a-sub-menu>
+            <a-menu-item v-else :key="menu.path">
+              <a-icon type="home" />
+              <span>{{ menu.title }}</span>
+            </a-menu-item>
+          </template>
+          <!-- <a-menu-item key="00">
+            <a-icon type="home" />
+            <span>首页</span>
+          </a-menu-item>
           <a-sub-menu key="sub1">
             <span slot="title">
               <a-icon type="user" /><span>用户管理</span>
@@ -65,7 +89,7 @@
             <a-menu-item key="11">
               名字很长名字很长名字很长名字很长
             </a-menu-item>
-          </a-sub-menu>
+          </a-sub-menu> -->
         </a-menu>
         <div class="sider-bottom">
           <a-icon
@@ -75,12 +99,7 @@
           />
         </div>
       </a-layout-sider>
-      <a-layout style="padding: 0 24px 24px">
-        <a-breadcrumb style="margin: 16px 0">
-          <a-breadcrumb-item>Home</a-breadcrumb-item>
-          <a-breadcrumb-item>List</a-breadcrumb-item>
-          <a-breadcrumb-item>App</a-breadcrumb-item>
-        </a-breadcrumb>
+      <a-layout>
         <a-layout-content>
           <router-view></router-view>
         </a-layout-content>
@@ -91,6 +110,8 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { NavMenu } from '../types/menu.d'
+import { RouteRecordPublic } from 'vue-router'
 
 @Component
 export default class BasicLayout extends Vue {
@@ -98,6 +119,44 @@ export default class BasicLayout extends Vue {
 
   toggleSiderFold() {
     this.collapsed = !this.collapsed
+  }
+
+  get activeMenu() {
+    return [this.$route.path]
+  }
+
+  handleMenuClick(menu: any) {
+    this.$router.push(menu.key)
+  }
+
+  menuList: NavMenu[] = []
+
+  created() {
+    const routes = this.$router.getRoutes()
+    const menuList: NavMenu[] = []
+    const menuMap: Map<RouteRecordPublic, NavMenu> = new Map()
+    routes.forEach((route) => {
+      const { path, meta, parent } = route
+      if (meta.nav) {
+        const menu = { title: meta.title, path, children: [] }
+        if (parent && parent.meta.nav) {
+          console.log(menu)
+          if (!menuMap.has(parent)) {
+            const parentMenu = {
+              title: parent.meta.title,
+              path: parent.path,
+              children: []
+            }
+            menuMap.set(parent, parentMenu)
+            menuList.push(parentMenu)
+          }
+          menuMap.get(parent)?.children?.push(menu)
+        } else if (!menuMap.has(route)) {
+          menuList.push(menu)
+        }
+      }
+    })
+    this.menuList = menuList
   }
 }
 </script>

@@ -7,7 +7,7 @@ export { SvgIcon }
 
 const plugin: PluginObject<Vue> = {
   install: function (vue) {
-    vue.component(SvgIcon.name, SvgIcon)
+    vue.component('svg-icon', SvgIcon)
   }
 }
 

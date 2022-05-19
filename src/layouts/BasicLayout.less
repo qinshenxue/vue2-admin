@@ -58,7 +58,7 @@
   }
 
   .logo {
-    color: #36a0da;
+    color: @primary-color;
     display: flex;
     align-items: center;
 
@@ -69,25 +69,45 @@
   }
 }
 
-.ant-layout-sider {
+/deep/ .ant-layout-sider {
   background-color: #f7f8fa;
+  position: relative;
+  padding-top: 12px;
 
-
-
-  /deep/ .ant-menu {
-    border-right: 0;
+  .ant-menu {
     background-color: transparent;
-    height: calc(100% - 52px);
-    padding: 0 10px;
+  }
 
+  .nav-menu {
+    border-right: 0;
+    height: calc(100% - 52px - 12px);
+    overflow-y: auto;
 
+    .ant-menu-submenu-title,
     .ant-menu-item {
-      height: 36px;
-      line-height: $height;
+      width: auto;
+      margin: 0 10px;
+      position: relative;
+
+      // &::after {
+      //   position: absolute;
+      //   left: 0;
+      //   right: 0;
+      //   border-top: 6px solid red;
+      //   opacity: 0.3;
+      //   top: 50%;
+      //   margin-top: -3px;
+      //   content: '';
+      // }
     }
 
-    .ant-menu-item:hover,
-    .ant-menu-item-selected {
+    >.ant-menu-submenu,
+    >.ant-menu-item {
+      margin-top: 4px;
+    }
+
+    >.ant-menu-item-selected {
+      background-color: transparent;
       border-radius: 3px;
       background-color: #e7ecfb;
 
@@ -96,12 +116,67 @@
       }
     }
 
+    .ant-menu-sub {
+
+      >.ant-menu-item:hover,
+      >.ant-menu-item-selected {
+        border-radius: 3px;
+        background-color: #e7ecfb;
+
+        &::after {
+          display: none;
+        }
+      }
+
+      .ant-menu-item {
+        padding-left: 10px + 14px + 10px !important;
+
+        +.ant-menu-item {
+          margin-top: 4px;
+        }
+      }
+    }
+
+
     &.ant-menu-inline-collapsed {
       width: 56px;
-      padding: 0;
 
+
+      >.ant-menu-item,
       >.ant-menu-submenu>.ant-menu-submenu-title {
-        padding: 0 20px !important;
+        padding: 0 10px !important;
+      }
+    }
+
+    .ant-menu-submenu-arrow {
+      transform: translateY(1px);
+      &::after,
+      &::before {
+        width: 7px;
+        height: 1px;
+        transition: transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+      }
+
+      &::before {
+        transform: rotate(-45deg) translateX(3px);
+      }
+
+      &::after {
+        transform: rotate(45deg) translateX(-3px);
+      }
+    }
+
+    .ant-menu-submenu-open {
+      .ant-menu-submenu-arrow {
+        transform: translateY(-3px);
+
+        &::before {
+          transform: rotate(45deg) translateX(3px);
+        }
+
+        &::after {
+          transform: rotate(-45deg) translateX(-3px);
+        }
       }
     }
   }
@@ -112,6 +187,10 @@
     text-align: right;
     line-height: $height;
     padding-right: 20px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
 
     .fold-sider {
       cursor: pointer;
