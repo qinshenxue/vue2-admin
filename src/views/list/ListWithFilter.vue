@@ -12,6 +12,28 @@
       </a-space>
     </template>
 
+    <template #filter-right>
+      <a-dropdown>
+        <div>下拉筛选 <a-icon type="down" /></div>
+        <a-menu slot="overlay">
+          <a-menu-item>
+            <a href="javascript:;">复制</a>
+          </a-menu-item>
+          <a-menu-item>
+            <a href="javascript:;">详情</a>
+          </a-menu-item>
+        </a-menu>
+      </a-dropdown>
+    </template>
+
+    <template #header-right>
+      <a-space :size="10">
+        <a-input-search placeholder="请输入搜索关键字" />
+        <a-divider style="font-size: 24px" type="vertical" />
+        <a-button type="primary">导出</a-button>
+      </a-space>
+    </template>
+
     <template v-slot:default="{ height }">
       <a-table
         :scroll="{ y: height - 40 }"
