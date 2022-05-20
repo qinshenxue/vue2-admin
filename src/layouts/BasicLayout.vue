@@ -26,7 +26,7 @@
         </a-dropdown>
       </div>
     </a-layout-header>
-    <a-layout>
+    <a-layout :hasSider="true">
       <a-layout-sider
         width="200"
         v-model="collapsed"
@@ -99,8 +99,8 @@ export default class BasicLayout extends Vue {
 
   handleMenuClick(menu: any) {
     const { key, keyPath } = menu
+    // 实现只有一个菜单展开
     this.openMenuKeys = keyPath.slice(-1)
-    console.log('openMenuKeys: ', this.openMenuKeys)
     this.$router.push(key).catch((err) => err)
   }
 

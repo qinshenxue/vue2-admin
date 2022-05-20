@@ -1,17 +1,5 @@
 <template>
-  <PageWrapper showFilter>
-    <template #filter-left>
-      <a-space :size="12">
-        <a-select :default-value="0" style="width: 180px">
-          <a-select-option :value="0"> 状态0 </a-select-option>
-          <a-select-option :value="1"> 状态1 </a-select-option>
-          <a-select-option :value="2"> 状态2 </a-select-option>
-          <a-select-option :value="3"> 状态3 </a-select-option>
-        </a-select>
-        <a-date-picker />
-      </a-space>
-    </template>
-
+  <PageWrapper>
     <template v-slot:default="{ height }">
       <a-table
         :scroll="{ y: height - 40 }"
@@ -22,6 +10,10 @@
         :pagination="false"
       >
         <template v-slot:name="text">
+          <a-avatar :style="{ backgroundColor: '#507afe' }" shape="square">{{
+            text.slice(0, 1)
+          }}</a-avatar
+          >&nbsp;
           <a target="_blank" href="https://open.mingyuanyun.com">{{ text }}</a>
         </template>
         <template v-slot:status="text">
@@ -71,17 +63,19 @@ import { Obj } from '@/types/common.d'
 @Component({
   components: { PageWrapper }
 })
-export default class ListWithFilter extends Vue {
+export default class List extends Vue {
   columns = [
     {
       title: '链接',
+      width: 200,
       dataIndex: 'name',
       scopedSlots: { customRender: 'name' }
     },
     {
       title: '日期',
       width: 120,
-      dataIndex: 'date'
+      dataIndex: 'date',
+      sorter: (a: Obj, b: Obj) => (new Date(a.date) > new Date(b.date) ? 1 : -1)
     },
     {
       title: '时间',

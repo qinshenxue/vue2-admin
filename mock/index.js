@@ -7,6 +7,6 @@ if (process.env.NODE_ENV === 'development') {
     req(item)
   })
   mockjs.setup({
-    timeout: 1000
+    timeout: 500
   })
 }

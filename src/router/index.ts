@@ -34,19 +34,19 @@ const routes: Array<RouteConfig> = [
     },
     children: [
       {
+        path: 'List',
+        component: () => import('../views/list/List.vue'),
+        meta: {
+          nav: true,
+          title: '普通列表'
+        }
+      },
+      {
         path: 'ListWithFilter',
         component: () => import('../views/list/ListWithFilter.vue'),
         meta: {
           nav: true,
           title: '列表带筛选'
-        }
-      },
-      {
-        path: 'ListWithIcon',
-        component: () => import('../views/list/ListWithIcon.vue'),
-        meta: {
-          nav: true,
-          title: '列表带图标'
         }
       }
     ]
