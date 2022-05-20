@@ -1,7 +1,7 @@
 // 导航菜单
 interface NavMenu {
-  title: String
-  path: String
+  title: string
+  path: string
   children?: NavMenu[]
 }
 

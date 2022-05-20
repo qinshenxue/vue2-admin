@@ -38,8 +38,8 @@
           class="nav-menu"
           mode="inline"
           :inlineIndent="10"
-          :default-selected-keys="activeMenu"
-          :default-open-keys="['sub1']"
+          :default-selected-keys="activeMenuKeys"
+          :open-keys.sync="openMenuKeys"
           @click="handleMenuClick"
         >
           <template v-for="menu in menuList">
@@ -54,42 +54,11 @@
                 child.title
               }}</a-menu-item>
             </a-sub-menu>
-            <a-menu-item v-else :key="menu.path">
+            <a-menu-item v-else :key="`${menu.path}`">
               <a-icon type="home" />
               <span>{{ menu.title }}</span>
             </a-menu-item>
           </template>
-          <!-- <a-menu-item key="00">
-            <a-icon type="home" />
-            <span>首页</span>
-          </a-menu-item>
-          <a-sub-menu key="sub1">
-            <span slot="title">
-              <a-icon type="user" /><span>用户管理</span>
-            </span>
-            <a-menu-item key="1"> 用户列表 </a-menu-item>
-            <a-menu-item key="2"> 菜单管理 </a-menu-item>
-            <a-menu-item key="3"> 授权管理 </a-menu-item>
-          </a-sub-menu>
-          <a-sub-menu key="sub2">
-            <span slot="title">
-              <a-icon type="laptop" /><span>角色管理</span>
-            </span>
-            <a-menu-item key="5"> 角色列表 </a-menu-item>
-            <a-menu-item key="6"> 新增角色 </a-menu-item>
-            <a-menu-item key="7">删除角色</a-menu-item>
-            <a-menu-item key="8">查询角色</a-menu-item>
-          </a-sub-menu>
-          <a-sub-menu key="sub3">
-            <span slot="title">
-              <a-icon type="notification" /><span>系统管理</span></span
-            >
-            <a-menu-item key="9"> 系统日志 </a-menu-item>
-            <a-menu-item key="10"> 操作日志 </a-menu-item>
-            <a-menu-item key="11">
-              名字很长名字很长名字很长名字很长
-            </a-menu-item>
-          </a-sub-menu> -->
         </a-menu>
         <div class="sider-bottom">
           <a-icon
@@ -121,12 +90,18 @@ export default class BasicLayout extends Vue {
     this.collapsed = !this.collapsed
   }
 
-  get activeMenu() {
+  // 当前选中的菜单key
+  get activeMenuKeys() {
     return [this.$route.path]
   }
 
+  openMenuKeys: string[] = []
+
   handleMenuClick(menu: any) {
-    this.$router.push(menu.key)
+    const { key, keyPath } = menu
+    this.openMenuKeys = keyPath.slice(-1)
+    console.log('openMenuKeys: ', this.openMenuKeys)
+    this.$router.push(key).catch((err) => err)
   }
 
   menuList: NavMenu[] = []
@@ -139,8 +114,8 @@ export default class BasicLayout extends Vue {
       const { path, meta, parent } = route
       if (meta.nav) {
         const menu = { title: meta.title, path, children: [] }
+        // 父级 nav 设置为true，才将父级菜单放入导航中
         if (parent && parent.meta.nav) {
-          console.log(menu)
           if (!menuMap.has(parent)) {
             const parentMenu = {
               title: parent.meta.title,
@@ -152,11 +127,31 @@ export default class BasicLayout extends Vue {
           }
           menuMap.get(parent)?.children?.push(menu)
         } else if (!menuMap.has(route)) {
+          // 排除父级菜单
           menuList.push(menu)
         }
       }
     })
     this.menuList = menuList
+
+    const curPath = this.$route.path
+    const openKeys: string[] = []
+    this.menuList.some((parent) => {
+      if (parent.path === curPath) {
+        return true
+      }
+      if (parent.children) {
+        return parent.children.some((child) => {
+          if (child.path === curPath) {
+            openKeys.push(parent.path)
+            return true
+          }
+          return false
+        })
+      }
+      return false
+    })
+    this.openMenuKeys = openKeys
   }
 }
 </script>
