@@ -10,6 +10,8 @@ import Component from '@/components'
 
 import '../mock/index'
 
+import './permission'
+
 Vue.config.productionTip = false
 Vue.use(AntVue)
 Vue.use(Request)

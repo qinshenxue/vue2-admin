@@ -12,6 +12,7 @@ const RouteView: Component = {
 const routes: Array<RouteConfig> = [
   {
     path: '/login',
+    name: 'login',
     component: () => import('../views/user/Login.vue'),
     meta: {
       title: '登录'

@@ -5,6 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "build:preview": "vue-cli-service build --mode preview",
     "svgo": "svgo -f src/components/SvgIcon/icons --config=src/components/SvgIcon/svgo.yml",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint"

@@ -40,7 +40,7 @@
             </a-form-item>
             <a-form-item>
               <a-input
-                v-model="form.passowrd"
+                v-model="form.password"
                 size="large"
                 type="password"
                 placeholder="密码"
@@ -51,6 +51,7 @@
 
             <a-form-item>
               <a-button
+                :loading="loading"
                 type="primary"
                 html-type="submit"
                 class="login-form-button"
@@ -77,11 +78,13 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
+import UserService from '@/api/user'
+
 @Component
 export default class Login extends Vue {
   form = {
     username: '',
-    passowrd: ''
+    password: ''
   }
 
   errMsg = ''
@@ -90,13 +93,23 @@ export default class Login extends Vue {
   //   onFormChange() {
   //     this.errMsg = ''
   //   }
+  loading = false
 
-  handleSubmit(e: Event) {
+  async handleSubmit(e: Event) {
     e.preventDefault()
     this.errMsg = ''
-    if (!this.form.username || !this.form.passowrd) {
+    if (!this.form.username || !this.form.password) {
       this.errMsg = '请输入用户名和密码'
     }
+    this.loading = true
+    const { data } = await UserService.login(this.form)
+    this.loading = false
+    if (!data.success) {
+      this.errMsg = data.msg
+      return
+    }
+    localStorage.setItem('access_token', data.data.access_token)
+    this.$router.push('/')
   }
 }
 </script>

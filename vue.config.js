@@ -4,7 +4,10 @@ function resolve(dir) {
   return path.join(__dirname, dir)
 }
 
+console.log(process.env.VUE_APP_API_BASE_URL)
+
 module.exports = defineConfig({
+  productionSourceMap: false,
   transpileDependencies: true,
 
   // devServer: {

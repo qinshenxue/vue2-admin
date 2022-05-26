@@ -21,7 +21,9 @@
           </div>
           <a-menu slot="overlay">
             <a-menu-item key="1"><a-icon type="lock" />修改密码</a-menu-item>
-            <a-menu-item key="3"><a-icon type="logout" />退出登录</a-menu-item>
+            <a-menu-item key="3" @click="handleLogout"
+              ><a-icon type="logout" />退出登录</a-menu-item
+            >
           </a-menu>
         </a-dropdown>
       </div>
@@ -102,6 +104,18 @@ export default class BasicLayout extends Vue {
     // 实现只有一个菜单展开
     this.openMenuKeys = keyPath.slice(-1)
     this.$router.push(key).catch((err) => err)
+  }
+
+  handleLogout() {
+    this.$confirm({
+      title: '提示',
+      content: '确定要退出吗?',
+      onOk: () => {
+        return this.$store.dispatch('Logout').then(() => {
+          this.$router.push({ name: 'login' })
+        })
+      }
+    })
   }
 
   menuList: NavMenu[] = []

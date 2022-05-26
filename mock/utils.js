@@ -7,6 +7,14 @@ function toResponse(data = [], success = true, msg = '', code = 200) {
   }
 }
 
-export {
-  toResponse
+function formatRequest(data) {
+  const newBody = data
+  if (newBody.body) {
+    try {
+      newBody.body = JSON.parse(newBody.body)
+    } catch (e) {}
+  }
+  return newBody
 }
+
+export { toResponse, formatRequest }
