@@ -68,11 +68,19 @@ const routes: Array<RouteConfig> = [
     },
     children: [
       {
-        path: 'ListWithForm',
-        component: () => import('../views/list/ListWithFilter.vue'),
+        path: 'Form',
+        component: () => import('../views/form/Form.vue'),
         meta: {
           nav: true,
-          title: '列表带筛选'
+          title: '表单输入'
+        }
+      },
+      {
+        path: 'FormDetail',
+        component: () => import('../views/form/FormDetail.vue'),
+        meta: {
+          nav: true,
+          title: '表单详情'
         }
       }
     ]

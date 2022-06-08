@@ -14,6 +14,23 @@ module.exports = defineConfig({
   //   host: '0.0.0.0'
   // },
 
+  css: {
+    loaderOptions: {
+      less: {
+        lessOptions: {
+          javascriptEnabled: true
+        }
+      }
+    }
+  },
+
+  pluginOptions: {
+    'style-resources-loader': {
+      preProcessor: 'less',
+      patterns: [resolve('./src/assets/vars.less')]
+    }
+  },
+
   chainWebpack(config) {
     // set svg-sprite-loader
     config.module
